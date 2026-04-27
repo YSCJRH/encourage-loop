@@ -1,0 +1,29 @@
+{
+  "name": "encourage-loop",
+  "version": "0.1.0",
+  "description": "Gentle guardrails for long-running coding agents.",
+  "type": "module",
+  "bin": {
+    "encourage": "./bin/encourage.js"
+  },
+  "scripts": {
+    "test": "node --test --test-reporter=spec tests/cursor.test.js tests/status.test.js tests/validate.test.js tests/handoff.test.js tests/nudge.test.js",
+    "lint": "node --check bin/encourage.js && node --check src/checkpoint.js && node --check src/cli.js && node --check src/cursor.js && node --check src/fsutil.js && node --check src/git.js && node --check src/handoff.js && node --check src/nudge.js && node --check src/paths.js && node --check src/rules.js && node --check src/status.js && node --check src/validate.js && node --check harness/scripts/run-harness.js"
+  },
+  "keywords": [
+    "codex",
+    "coding-agent",
+    "ai-agent",
+    "long-running-tasks",
+    "harness",
+    "drift-guard",
+    "developer-tools",
+    "codex-plugin",
+    "codex-skill"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {}
+}

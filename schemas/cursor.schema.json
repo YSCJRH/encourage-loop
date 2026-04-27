@@ -1,0 +1,79 @@
+{
+  "type": "object",
+  "required": [
+    "plan",
+    "current_stage",
+    "stage_status",
+    "next_atomic_task",
+    "last_completed_evidence",
+    "last_validation",
+    "known_blockers"
+  ],
+  "properties": {
+    "plan": {
+      "type": "string"
+    },
+    "current_stage": {
+      "type": "string"
+    },
+    "stage_status": {
+      "type": "string",
+      "enum": [
+        "not_started",
+        "in_progress",
+        "validation_pending",
+        "complete",
+        "blocked",
+        "pushed",
+        "review_pending",
+        "release_candidate",
+        "released"
+      ]
+    },
+    "next_atomic_task": {
+      "type": "string"
+    },
+    "last_completed_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "last_validation": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "command",
+          "result"
+        ],
+        "properties": {
+          "command": {
+            "type": "string"
+          },
+          "result": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "known_blockers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "scope_guard": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "updated_at": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "encourage-loop",
+  "version": "0.1.0",
+  "description": "Gentle guardrails for long-running coding agents: plan cursor, evidence gates, handoff notes, and drift nudges.",
+  "author": {
+    "name": "YSCJRH"
+  },
+  "repository": "https://github.com/YSCJRH/encourage-loop",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "coding-agent",
+    "ai-agent",
+    "long-running-tasks",
+    "harness",
+    "skills",
+    "drift-guard",
+    "developer-tools"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "EncourageLoop",
+    "shortDescription": "Keep long-running Codex work aligned with a plan.",
+    "longDescription": "EncourageLoop helps Codex continue long-running work without drifting, skipping validation, falsely claiming completion, or losing state across sessions.",
+    "developerName": "YSCJRH",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "$encourage-loop Continue the current plan from .encourage/cursor.md. Do the next atomic task only, validate, checkpoint, and report evidence."
+    ]
+  }
+}

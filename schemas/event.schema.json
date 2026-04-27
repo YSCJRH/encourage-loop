@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "required": [
+    "type",
+    "at",
+    "stage"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "checkpoint",
+        "validation",
+        "nudge",
+        "handoff",
+        "warning"
+      ]
+    },
+    "at": {
+      "type": "string"
+    },
+    "stage": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "next": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "blocker": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

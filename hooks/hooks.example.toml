@@ -1,0 +1,6 @@
+# Future Codex hooks example. Not active in MVP.
+# Enable only after reviewing Codex hook docs and explicitly opting in.
+
+# [hooks]
+# stop = "node hooks/stop-validate.js"
+# post_tool_use = "node hooks/post-tool-record.js"

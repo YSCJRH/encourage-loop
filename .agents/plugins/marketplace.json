@@ -1,0 +1,20 @@
+{
+  "name": "encourage-loop-local",
+  "interface": {
+    "displayName": "EncourageLoop Local"
+  },
+  "plugins": [
+    {
+      "name": "encourage-loop",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
