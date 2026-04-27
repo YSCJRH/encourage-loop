@@ -72,6 +72,7 @@ test('operator docs stay readable multi-line Markdown', () => {
     'AGENTS.md',
     'START_CODEX.md',
     'prompts/codex-startup.md',
+    'docs/release-checklist.md',
     'skills/encourage-loop/SKILL.md',
     '.agents/skills/encourage-loop/SKILL.md'
   ];
@@ -95,4 +96,16 @@ test('operator docs stay readable multi-line Markdown', () => {
       }
     }
   }
+});
+
+test('release checklist keeps release actions manual-only', () => {
+  const checklist = read('docs/release-checklist.md');
+
+  assert.match(checklist, /documentation only/);
+  assert.match(checklist, /does not authorize Codex, CI, or any automation/);
+  assert.match(checklist, /Only after explicit maintainer confirmation/);
+  assert.match(checklist, /git tag v0\.1\.0/);
+  assert.match(checklist, /npm publish/);
+  assert.match(checklist, /gh release create v0\.1\.0/);
+  assert.match(checklist, /Do not retry with force flags/);
 });

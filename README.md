@@ -124,6 +124,11 @@ npm run lint
 node harness/scripts/run-harness.js
 ```
 
+## Release
+
+Release remains manual-only. See `docs/release-checklist.md` before any tag, publish,
+or GitHub release action.
+
 ## License
 
 MIT
