@@ -3,7 +3,7 @@ import { readCursor } from './cursor.js';
 import { gitStatus } from './git.js';
 import { fileExists, readJsonl } from './fsutil.js';
 import { encouragePath, STATE_JSONL } from './paths.js';
-import { hasDangerousCommand, riskLevel } from './rules.js';
+import { hasDangerousCommandEvent, riskLevel } from './rules.js';
 
 export function validate(cwd = process.cwd()) {
   const warnings = [];
@@ -35,8 +35,7 @@ export function validate(cwd = process.cwd()) {
     warnings.push({ level: 'YELLOW', message: 'Working tree has changes but no checkpoint event exists yet.' });
   }
 
-  const eventText = events.map((event) => JSON.stringify(event)).join('\n');
-  if (hasDangerousCommand(eventText)) {
+  if (events.some((event) => hasDangerousCommandEvent(event))) {
     warnings.push({ level: 'RED', message: 'State history contains a dangerous command or release/merge intent.' });
   }
 

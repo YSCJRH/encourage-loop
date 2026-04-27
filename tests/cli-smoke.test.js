@@ -39,3 +39,33 @@ test('CLI reports a helpful missing-cursor error through the bin entrypoint', ()
   assert.match(status.stderr, /No EncourageLoop cursor found/);
   assert.match(status.stderr, /encourage init --plan <path>/);
 });
+
+test('CLI checkpoint preserves repeated validation flags', () => {
+  const cwd = tempRepo();
+
+  const init = runCli(cwd, ['init', '--plan', 'plan.md']);
+  assert.equal(init.status, 0);
+
+  const checkpoint = runCli(cwd, [
+    'checkpoint',
+    '--stage',
+    'R4',
+    '--status',
+    'release_candidate',
+    '--evidence',
+    'Recorded release-candidate checks.',
+    '--next',
+    'Maintainer review.',
+    '--validation',
+    'npm test: passed',
+    '--validation',
+    'npm run lint: passed'
+  ]);
+  assert.equal(checkpoint.status, 0);
+
+  const cursor = JSON.parse(fs.readFileSync(path.join(cwd, '.encourage/cursor.json'), 'utf8'));
+  assert.deepEqual(cursor.last_validation.slice(-2), [
+    { command: 'npm test', result: 'passed' },
+    { command: 'npm run lint', result: 'passed' }
+  ]);
+});

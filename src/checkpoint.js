@@ -12,8 +12,8 @@ export function checkpoint(options, cwd = process.cwd()) {
   if (options.evidence) evidence.push(options.evidence);
 
   const validations = [...(cursor.last_validation || [])];
-  if (options.validation) {
-    const validation = parseValidation(options.validation);
+  for (const validationText of optionList(options.validation)) {
+    const validation = parseValidation(validationText);
     validations.push(validation);
     appendJsonl(encouragePath(VALIDATIONS_JSONL, cwd), {
       type: 'validation',
@@ -47,6 +47,11 @@ export function checkpoint(options, cwd = process.cwd()) {
   });
 
   return updated;
+}
+
+function optionList(value) {
+  if (value === undefined || value === null || value === false) return [];
+  return Array.isArray(value) ? value : [value];
 }
 
 function parseValidation(text) {

@@ -17,7 +17,12 @@ export const DEFAULT_FORBIDDEN_PRODUCT_TONE = [
 ];
 
 export function hasDangerousCommand(text = '') {
+  if (typeof text !== 'string') return false;
   return DANGEROUS_COMMAND_PATTERNS.some((pattern) => pattern.test(text));
+}
+
+export function hasDangerousCommandEvent(event = {}) {
+  return hasDangerousCommand(event.command);
 }
 
 export function riskLevel(warnings) {

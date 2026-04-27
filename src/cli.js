@@ -61,14 +61,24 @@ export function parseArgs(argv) {
       const key = token.slice(2).replaceAll('-', '_');
       const next = argv[i + 1];
       if (!next || next.startsWith('--')) {
-        result[key] = true;
+        setArg(result, key, true);
       } else {
-        result[key] = next;
+        setArg(result, key, next);
         i += 1;
       }
     }
   }
   return result;
+}
+
+function setArg(result, key, value) {
+  if (!Object.hasOwn(result, key)) {
+    result[key] = value;
+  } else if (Array.isArray(result[key])) {
+    result[key].push(value);
+  } else {
+    result[key] = [result[key], value];
+  }
 }
 
 function helpText() {

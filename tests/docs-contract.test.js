@@ -66,3 +66,33 @@ test('future integration docs remain future-only and constrained', () => {
   assert.match(appServer, /intentionally out of MVP scope/);
   assert.match(appServer, /only after the CLI \+ skill loop is trusted/);
 });
+
+test('operator docs stay readable multi-line Markdown', () => {
+  const docs = [
+    'AGENTS.md',
+    'START_CODEX.md',
+    'prompts/codex-startup.md',
+    'skills/encourage-loop/SKILL.md',
+    '.agents/skills/encourage-loop/SKILL.md'
+  ];
+
+  for (const doc of docs) {
+    const text = read(doc);
+    const lines = text.split(/\r?\n/);
+    const nonEmptyLines = lines.filter((line) => line.trim().length > 0);
+    let inFence = false;
+
+    assert.ok(lines.length >= 12, `${doc} appears collapsed`);
+    assert.ok(lines.some((line) => /^#{1,3}\s+\S/.test(line)), `${doc} is missing Markdown headings`);
+    assert.ok(lines.some((line) => line.trim() === ''), `${doc} is missing paragraph breaks`);
+    assert.ok(nonEmptyLines.length >= 8, `${doc} has too little structured content`);
+
+    for (let index = 0; index < lines.length; index += 1) {
+      const line = lines[index];
+      if (line.startsWith('```')) inFence = !inFence;
+      if (!inFence && line.length > 120) {
+        assert.fail(`${doc}:${index + 1} exceeds 120 characters`);
+      }
+    }
+  }
+});

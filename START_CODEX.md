@@ -21,9 +21,12 @@ node bin/encourage.js handoff
 ## Recommended Codex prompt after smoke
 
 ```text
-$encourage-loop Continue from .encourage/cursor.md. Work only on the next atomic task in plans/v0.1-mvp-execplan.md, validate, checkpoint, and report evidence.
+$encourage-loop Continue from .encourage/cursor.md.
+Work only on the next atomic task in plans/v0.1-mvp-execplan.md.
+Validate, checkpoint, and report evidence.
 ```
 
 ## Important
 
-Do not start by adding daemon, MCP, app-server, overlay, or keyboard injection. First harden the CLI, tests, cursor contract, and plugin packaging.
+Do not start by adding daemon, MCP, app-server, overlay, or keyboard injection.
+First harden the CLI, tests, cursor contract, and plugin packaging.

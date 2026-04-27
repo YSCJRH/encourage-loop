@@ -25,6 +25,12 @@
     "status": {
       "type": "string"
     },
+    "command": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "evidence": {
       "type": [
         "string",

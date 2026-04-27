@@ -1,6 +1,6 @@
 ---
 name: encourage-loop
-description: Use this skill for long-running, phase-based coding tasks where Codex must continue without drifting, skipping validation, or losing state across sessions.
+description: Keep long-running Codex tasks scoped, validated, evidenced, and continuous.
 ---
 
 # EncourageLoop
@@ -31,10 +31,12 @@ Your job is to keep moving while preserving scope, evidence, and continuity.
 
 - Stay inside the current stage.
 - Prefer small, verifiable edits.
-- If implementation reality differs from the plan, make the smallest safe adjustment and record it.
+- If implementation reality differs from the plan, make the smallest safe adjustment and record
+  it.
 - If a task is already done, record evidence and move to the next unfinished task.
 - Do not claim completion without validation evidence.
-- Do not merge, release, publish, or delete branches unless the user explicitly authorizes it.
+- Do not merge, release, publish, or delete branches unless the user explicitly authorizes the
+  action.
 
 ## Completion gate
 
@@ -60,7 +62,12 @@ Update the cursor with:
 Suggested command:
 
 ```bash
-node bin/encourage.js checkpoint --stage <stage> --status <status> --evidence "<what changed>" --next "<next atomic task>" --validation "<command>: <result>"
+node bin/encourage.js checkpoint \
+  --stage <stage> \
+  --status <status> \
+  --evidence "<what changed>" \
+  --next "<next atomic task>" \
+  --validation "<command>: <result>"
 ```
 
 Then report:
