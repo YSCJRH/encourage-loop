@@ -26,7 +26,7 @@ function run(args, options = {}) {
   }
 }
 
-run(['node', '--test', '--test-reporter=spec', 'tests/cursor.test.js', 'tests/status.test.js', 'tests/validate.test.js', 'tests/handoff.test.js', 'tests/nudge.test.js']);
+run(['node', '--test', '--test-reporter=spec', 'tests/cli-smoke.test.js', 'tests/cursor.test.js', 'tests/status.test.js', 'tests/validate.test.js', 'tests/handoff.test.js', 'tests/nudge.test.js', 'tests/packaging.test.js', 'tests/docs-contract.test.js']);
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'encourage-harness-'));
 fs.copyFileSync(path.join(root, 'plans/v0.1-mvp-execplan.md'), path.join(tmp, 'plan.md'));

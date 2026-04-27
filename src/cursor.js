@@ -133,26 +133,45 @@ function list(items = []) {
 
 function parseCursorMarkdown(text) {
   const get = (label) => {
-    const re = new RegExp(`${label}:\\s*([^\\n]+)`, 'i');
+    const re = new RegExp(`${escapeRegExp(label)}:\\s*([^\\n]+)`, 'i');
     const m = text.match(re);
     return m ? m[1].trim() : '';
   };
   const block = (label) => {
-    const re = new RegExp(`${label}:\\s*\\n([\\s\\S]*?)(?:\\n\\n[A-Z][^\\n:]+:|$)`, 'i');
+    const re = new RegExp(`${escapeRegExp(label)}:\\s*\\n([\\s\\S]*?)(?=\\n\\n[A-Z][^\\n:]+:|$)`, 'i');
     const m = text.match(re);
     if (!m) return '';
-    return m[1].trim().replace(/^-\s*/gm, '').replace('None yet.', '').trim();
+    return m[1].trim();
   };
+  const listBlock = (label) => block(label)
+    .split(/\r?\n/)
+    .map((line) => line.trim().replace(/^-\s*/, '').trim())
+    .filter((line) => line && line !== 'None yet.' && line !== 'None.');
+  const validation = listBlock('Last validation').map(parseValidationLine);
   return {
     plan: get('Plan'),
     current_stage: get('Current stage') || 'R0',
     stage_status: get('Stage status') || 'in_progress',
-    next_atomic_task: block('Next atomic task') || 'Continue the next unfinished task.',
-    last_completed_evidence: block('Last completed evidence') ? block('Last completed evidence').split(/\n+/).filter(Boolean) : [],
-    last_validation: [],
-    known_blockers: block('Known blockers') ? block('Known blockers').split(/\n+/).filter(Boolean) : [],
-    scope_guard: block('Scope guard') ? block('Scope guard').split(/\n+/).filter(Boolean) : []
+    next_atomic_task: listBlock('Next atomic task').join('\n') || block('Next atomic task') || 'Continue the next unfinished task.',
+    last_completed_evidence: listBlock('Last completed evidence'),
+    last_validation: validation,
+    known_blockers: listBlock('Known blockers'),
+    scope_guard: listBlock('Scope guard'),
+    updated_at: get('Updated at')
   };
+}
+
+function parseValidationLine(line) {
+  const index = line.indexOf(':');
+  if (index === -1) return { command: line, result: 'recorded' };
+  return {
+    command: line.slice(0, index).trim(),
+    result: line.slice(index + 1).trim()
+  };
+}
+
+function escapeRegExp(text) {
+  return String(text).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 export function assertValidStatus(status) {
