@@ -30,7 +30,10 @@ deployment, or automation.
 
 - Current cursor plan: `plans/v0.1.3-project-status-execplan.md`.
 - Current goal: keep project status clear before any further release preparation or runtime scope.
-- Current next action: push the status snapshot commit and record remote CI evidence.
+- Current validation: GitHub Actions run `25053433270` passed for status snapshot commit
+  `5e8d233`.
+- Current next action: decide whether to start the next plan or separately authorize manual release
+  preparation.
 
 ## Release Boundary
 
