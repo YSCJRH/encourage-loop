@@ -49,9 +49,9 @@ fails, or package contents do not match the intended surface.
 
 ## Version Boundary
 
-`package.json` remains at version `0.1.0` unless a target-version execution plan explicitly
-authorizes a version bump. Do not run `npm version`, custom release scripts, or package publish
-tooling as a shortcut.
+Package metadata remains at the current checked-in version unless a target-version execution plan
+or release-preparation addendum explicitly authorizes a version bump. Do not run `npm version`,
+custom release scripts, or package publish tooling as a shortcut.
 
 If a version bump is separately authorized, it must be reviewed as a normal code change, validated,
 committed, pushed, and checked in CI before any tag or publish command is considered.

@@ -54,10 +54,11 @@ function parseFrontmatter(text) {
 
 test('plugin manifest points to the packaged skills directory', () => {
   const manifest = readJson('.codex-plugin/plugin.json');
+  const packageJson = readJson('package.json');
   const skillsPath = path.resolve(root, manifest.skills);
 
   assert.equal(manifest.name, 'encourage-loop');
-  assert.equal(manifest.version, '0.1.0');
+  assert.equal(manifest.version, packageJson.version);
   assert.equal(manifest.license, 'MIT');
   assert.equal(manifest.repository, 'https://github.com/YSCJRH/encourage-loop');
   assert.equal(manifest.skills, './skills/');

@@ -128,7 +128,7 @@ test('future release preparation guard stays manual-only and version-specific', 
   assert.match(guard, /docs\/project-status\.md/);
   assert.match(guard, /Do not treat a readiness note, passing CI run, package dry-run, or completed maintenance plan as/);
   assert.match(guard, /git ls-remote origin refs\/heads\/main refs\/tags\/v<target-version>/);
-  assert.match(guard, /`package\.json` remains at version `0\.1\.0` unless/);
+  assert.match(guard, /Package metadata remains at the current checked-in version unless/);
   assert.match(guard, /Do not run `npm version`/);
   assert.match(guard, /Each confirmation covers exactly one command/);
   assert.match(guard, /Do not combine commands with `&&`, `;`, scripts/);
@@ -185,11 +185,23 @@ test('project status separates published release from maintenance candidates', (
   assert.match(status, /v0\.1\.2 is a repository maintenance candidate/);
   assert.match(status, /v0\.1\.3 is a repository status snapshot candidate/);
   assert.match(status, /v0\.1\.4 is a repository release-preparation guard candidate/);
-  assert.match(status, /v0\.1\.5 is a repository status-stability candidate/);
+  assert.match(status, /v0\.1\.5 is a repository status-stability and release-preparation candidate/);
+  assert.match(status, /docs\/v0\.1\.5-release-notes\.md/);
   assert.match(status, /has not been released/);
-  assert.match(status, /`package\.json` remains at version `0\.1\.0`/);
+  assert.match(status, /Package and plugin metadata may be prepared at `0\.1\.5`/);
+  assert.match(status, /npm and GitHub release evidence remain at `0\.1\.0`/);
   assert.match(status, /requires a separate\s+maintainer decision/);
   assert.match(status, /Do not treat a readiness note, passing CI run, or maintenance plan completion as release/);
+});
+
+test('v0.1.5 release notes define the approved release-preparation target', () => {
+  const notes = read('docs/v0.1.5-release-notes.md');
+
+  assert.match(notes, /# EncourageLoop v0\.1\.5 Release Notes/);
+  assert.match(notes, /Target package version: `0\.1\.5`/);
+  assert.match(notes, /Target tag: `v0\.1\.5`/);
+  assert.match(notes, /Release scope: npm package and GitHub release/);
+  assert.match(notes, /does not itself authorize\s+tag, publish, or release commands/);
 });
 
 test('project status avoids volatile current-state evidence', () => {

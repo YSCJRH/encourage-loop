@@ -25,10 +25,11 @@ deployment, or automation.
   `plans/v0.1.3-project-status-execplan.md`; it has not been released.
 - v0.1.4 is a repository release-preparation guard candidate documented by
   `docs/future-release-preparation.md`; it has not been released.
-- v0.1.5 is a repository status-stability candidate documented by
-  `plans/v0.1.5-status-stability-execplan.md`; it has not been released.
-- `package.json` remains at version `0.1.0` until a future release plan explicitly authorizes a
-  version bump.
+- v0.1.5 is a repository status-stability and release-preparation candidate documented by
+  `plans/v0.1.5-status-stability-execplan.md` and `docs/v0.1.5-release-notes.md`; it has not
+  been released.
+- Package and plugin metadata may be prepared at `0.1.5` after explicit maintainer confirmation,
+  but npm and GitHub release evidence remain at `0.1.0` until manual release actions complete.
 
 ## Finding Current State
 
