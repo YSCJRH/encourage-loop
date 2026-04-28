@@ -99,6 +99,14 @@ test('package manifest explicitly controls published files', () => {
   ]);
 });
 
+test('package manifest exposes the encourage CLI without publish-time normalization', () => {
+  const packageJson = readJson('package.json');
+
+  assert.deepEqual(packageJson.bin, {
+    encourage: 'bin/encourage.js'
+  });
+});
+
 test('local marketplace entry points at this plugin root', () => {
   const manifest = readJson('.codex-plugin/plugin.json');
   const marketplace = readJson('.agents/plugins/marketplace.json');

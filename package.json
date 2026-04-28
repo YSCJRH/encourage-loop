@@ -21,7 +21,7 @@
     "tests/"
   ],
   "bin": {
-    "encourage": "./bin/encourage.js"
+    "encourage": "bin/encourage.js"
   },
   "scripts": {
     "test": "node --test --test-reporter=spec tests/cli-smoke.test.js tests/cursor.test.js tests/status.test.js tests/validate.test.js tests/handoff.test.js tests/nudge.test.js tests/packaging.test.js tests/docs-contract.test.js",
