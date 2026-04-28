@@ -67,5 +67,7 @@ if (!handoffText.includes('EncourageLoop Handoff')) {
 }
 console.log('Handoff smoke generated.');
 
+run(['node', 'harness/scripts/install-smoke.js']);
+
 console.log('Harness passed.');
 process.exit(0);

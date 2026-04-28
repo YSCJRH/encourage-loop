@@ -107,6 +107,19 @@ test('package manifest exposes the encourage CLI without publish-time normalizat
   });
 });
 
+test('install smoke uses a local packed tarball without registry checks', () => {
+  const script = read('harness/scripts/install-smoke.js');
+
+  assert.match(script, /npm', \['pack', '--json', '--pack-destination'/);
+  assert.match(script, /'install'/);
+  assert.match(script, /'--offline'/);
+  assert.match(script, /'--no-audit'/);
+  assert.match(script, /'--no-fund'/);
+  assert.match(script, /'--ignore-scripts'/);
+  assert.match(script, /Installed encourage binary/);
+  assert.doesNotMatch(script, /npm view|npm publish|registry\.npmjs\.org|https?:\/\//);
+});
+
 test('local marketplace entry points at this plugin root', () => {
   const manifest = readJson('.codex-plugin/plugin.json');
   const marketplace = readJson('.agents/plugins/marketplace.json');
