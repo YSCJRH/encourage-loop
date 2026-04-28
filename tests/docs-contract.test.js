@@ -184,8 +184,9 @@ test('project status separates published release from maintenance candidates', (
   assert.match(status, /v0\.1\.1 is a repository maintenance candidate/);
   assert.match(status, /v0\.1\.2 is a repository maintenance candidate/);
   assert.match(status, /v0\.1\.3 is a repository status snapshot candidate/);
+  assert.match(status, /v0\.1\.4 is a repository release-preparation guard candidate/);
   assert.match(status, /has not been released/);
-  assert.match(status, /There is no remote `v0\.1\.1` tag, `v0\.1\.2` tag, or `v0\.1\.3` tag/);
+  assert.match(status, /There is no remote `v0\.1\.1` tag, `v0\.1\.2` tag, `v0\.1\.3` tag, or `v0\.1\.4` tag/);
   assert.match(status, /`package\.json` remains at version `0\.1\.0`/);
   assert.match(status, /requires a separate\s+maintainer decision/);
   assert.match(status, /Do not treat a readiness note, passing CI run, or maintenance plan completion as release/);

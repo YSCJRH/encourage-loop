@@ -17,15 +17,17 @@ deployment, or automation.
 
 ## Repository Maintenance Candidates
 
-- `main@ccc980a` includes post-release hardening, CI platform maintenance, and project status
-  snapshot work after v0.1.0.
+- `main@2b021b3` includes post-release hardening, CI platform maintenance, project status
+  snapshot work, and future-release preparation guidance after v0.1.0.
 - v0.1.1 is a repository maintenance candidate documented by
   `docs/v0.1.1-readiness-note.md`; it has not been released.
 - v0.1.2 is a repository maintenance candidate documented by
   `docs/v0.1.2-ci-platform-maintenance-readiness-note.md`; it has not been released.
 - v0.1.3 is a repository status snapshot candidate documented by
   `plans/v0.1.3-project-status-execplan.md`; it has not been released.
-- There is no remote `v0.1.1` tag, `v0.1.2` tag, or `v0.1.3` tag.
+- v0.1.4 is a repository release-preparation guard candidate documented by
+  `docs/future-release-preparation.md`; it has not been released.
+- There is no remote `v0.1.1` tag, `v0.1.2` tag, `v0.1.3` tag, or `v0.1.4` tag.
 - `package.json` remains at version `0.1.0` until a future release plan explicitly authorizes a
   version bump.
 
@@ -33,9 +35,10 @@ deployment, or automation.
 
 - Current cursor plan: `plans/v0.1.4-release-preparation-guard-execplan.md`.
 - Current goal: keep future release preparation explicit and manual-only.
-- Current validation: local validation and `node bin/encourage.js validate` passed for the
-  release-preparation guard candidate.
-- Current next action: push the release-preparation guard commit and record remote CI evidence.
+- Current validation: GitHub Actions run `25053780432` passed for release-preparation guard commit
+  `2b021b3`.
+- Current next action: decide whether to start the next plan or separately authorize manual release
+  preparation.
 
 ## Release Boundary
 
