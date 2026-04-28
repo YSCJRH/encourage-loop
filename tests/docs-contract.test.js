@@ -136,6 +136,20 @@ test('startup prompts route post-release work through a plan first', () => {
   assert.match(startCodex, /After a release, start or follow a post-release plan/);
 });
 
+test('v0.1.1 readiness note is explicit evidence without release action', () => {
+  const note = read('docs/v0.1.1-readiness-note.md');
+
+  assert.match(note, /readiness evidence only/);
+  assert.match(note, /passed with 49 tests/);
+  assert.match(note, /including install smoke/);
+  assert.match(note, /No v0\.1\.1 release action has been performed/);
+  assert.match(note, /No version bump was performed/);
+  assert.match(note, /No `v0\.1\.1` tag was created/);
+  assert.match(note, /No npm publish was run/);
+  assert.match(note, /No GitHub release was created/);
+  assert.match(note, /requires a separate maintainer decision/);
+});
+
 test('blocker hygiene docs distinguish current blockers from historical evidence', () => {
   const docs = read('docs/blocker-hygiene.md');
 
