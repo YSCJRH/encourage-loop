@@ -101,6 +101,8 @@ test('operator docs stay readable multi-line Markdown', () => {
 test('release checklist keeps release actions manual-only', () => {
   const checklist = read('docs/release-checklist.md');
 
+  assert.match(checklist, /v0\.1\.0 Manual Release Checklist/);
+  assert.match(checklist, /docs\/future-release-preparation\.md/);
   assert.match(checklist, /documentation only/);
   assert.match(checklist, /does not authorize Codex, CI, or any automation/);
   assert.match(checklist, /Only after explicit maintainer confirmation/);
@@ -112,6 +114,28 @@ test('release checklist keeps release actions manual-only', () => {
   assert.match(checklist, /retargeted only after explicit maintainer approval/);
   assert.match(checklist, /post-release evidence/);
   assert.match(checklist, /Do not retry with force flags/);
+});
+
+test('future release preparation guard stays manual-only and version-specific', () => {
+  const readme = read('README.md');
+  const status = read('docs/project-status.md');
+  const guard = read('docs/future-release-preparation.md');
+
+  assert.match(readme, /docs\/future-release-preparation\.md/);
+  assert.match(status, /docs\/future-release-preparation\.md/);
+  assert.match(guard, /maintainer explicitly asks to prepare a specific future release/);
+  assert.match(guard, /target version, such as `<target-version>`/);
+  assert.match(guard, /docs\/project-status\.md/);
+  assert.match(guard, /Do not treat a readiness note, passing CI run, package dry-run, or completed maintenance plan as/);
+  assert.match(guard, /git ls-remote origin refs\/heads\/main refs\/tags\/v<target-version>/);
+  assert.match(guard, /`package\.json` remains at version `0\.1\.0` unless/);
+  assert.match(guard, /Do not run `npm version`/);
+  assert.match(guard, /Each confirmation covers exactly one command/);
+  assert.match(guard, /Do not combine commands with `&&`, `;`, scripts/);
+  assert.match(guard, /git tag v<target-version>/);
+  assert.match(guard, /gh release create v<target-version>/);
+  assert.match(guard, /Do not delete a\s+tag, retarget a tag, unpublish, force-push/);
+  assert.doesNotMatch(guard, /--force|git push -f|npm publish --dry-run/);
 });
 
 test('readiness review separates pre-release readiness from release evidence', () => {
@@ -159,8 +183,9 @@ test('project status separates published release from maintenance candidates', (
   assert.match(status, /GitHub release `v0\.1\.0` exists/);
   assert.match(status, /v0\.1\.1 is a repository maintenance candidate/);
   assert.match(status, /v0\.1\.2 is a repository maintenance candidate/);
+  assert.match(status, /v0\.1\.3 is a repository status snapshot candidate/);
   assert.match(status, /has not been released/);
-  assert.match(status, /There is no remote `v0\.1\.1` tag or `v0\.1\.2` tag/);
+  assert.match(status, /There is no remote `v0\.1\.1` tag, `v0\.1\.2` tag, or `v0\.1\.3` tag/);
   assert.match(status, /`package\.json` remains at version `0\.1\.0`/);
   assert.match(status, /requires a separate\s+maintainer decision/);
   assert.match(status, /Do not treat a readiness note, passing CI run, or maintenance plan completion as release/);

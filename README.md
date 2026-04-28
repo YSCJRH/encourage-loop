@@ -133,7 +133,8 @@ readiness notes before preparing any future release.
 ## Release
 
 Release remains manual-only. See `docs/release-checklist.md` before any tag, publish,
-or GitHub release action.
+or GitHub release action. For versions after v0.1.0, start with
+`docs/future-release-preparation.md` and the current `docs/project-status.md`.
 
 ## License
 

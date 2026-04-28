@@ -1,8 +1,12 @@
-# v0.1 Manual Release Checklist
+# v0.1.0 Manual Release Checklist
 
 This checklist is for the maintainer who decides whether EncourageLoop v0.1.0 should be
 released. It is documentation only; it does not authorize Codex, CI, or any automation to tag,
 publish, merge, deploy, or create a GitHub release.
+
+For any version after v0.1.0, first read `docs/project-status.md` and
+`docs/future-release-preparation.md`. This v0.1.0 checklist is historical release evidence and a
+manual-only reference, not a standing release plan for later versions.
 
 ## Release Gate
 
