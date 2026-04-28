@@ -1,0 +1,54 @@
+{
+  "plan": "plans/v0.1.1-post-release-hardening-execplan.md",
+  "current_stage": "R4",
+  "stage_status": "blocked",
+  "next_atomic_task": "Ask the maintainer to approve or reject the exact corrective tag action.",
+  "last_completed_evidence": [
+    "The original release tag pointed at an earlier commit.",
+    "A publish-blocking package manifest issue was fixed after the original tag was pushed.",
+    "The corrected commit passed local validation before any corrective tag discussion."
+  ],
+  "last_validation": [
+    {
+      "command": "git rev-parse HEAD",
+      "result": "recorded corrected commit"
+    },
+    {
+      "command": "git ls-remote origin refs/tags/v0.1.0",
+      "result": "recorded remote tag target"
+    },
+    {
+      "command": "npm test",
+      "result": "passed on corrected commit"
+    }
+  ],
+  "known_blockers": [
+    "Release tag target and corrected release commit differ."
+  ],
+  "scope_guard": [
+    "Do not move, delete, or recreate a tag without exact maintainer approval.",
+    "Do not treat corrective tag work as routine cleanup.",
+    "Record the old tag target, new intended target, and approval boundary."
+  ],
+  "release_lifecycle": {
+    "state": "tag-retarget",
+    "classification": "partially-released",
+    "network_required": false,
+    "manual_confirmation_required": true,
+    "expected_evidence": [
+      "old tag target recorded",
+      "corrected commit recorded",
+      "reason for mismatch recorded",
+      "validation for corrected commit passed",
+      "maintainer approval required before changing tag state"
+    ],
+    "stop_conditions": [
+      "old tag target is unknown",
+      "corrected commit has not passed validation",
+      "package version is already published from the old tag",
+      "maintainer has not approved the exact corrective action"
+    ],
+    "allowed_next_action": "Record facts and request explicit maintainer approval before any tag correction."
+  },
+  "updated_at": "2026-04-28T00:00:00.000Z"
+}

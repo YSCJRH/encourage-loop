@@ -37,7 +37,8 @@ run([
   'tests/handoff.test.js',
   'tests/nudge.test.js',
   'tests/packaging.test.js',
-  'tests/docs-contract.test.js'
+  'tests/docs-contract.test.js',
+  'tests/release-lifecycle.test.js'
 ]);
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'encourage-harness-'));

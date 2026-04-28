@@ -1,0 +1,58 @@
+{
+  "plan": "plans/v0.1.1-post-release-hardening-execplan.md",
+  "current_stage": "R4",
+  "stage_status": "release_candidate",
+  "next_atomic_task": "Ask the maintainer to confirm the first manual release command.",
+  "last_completed_evidence": [
+    "Working tree was clean on main at the intended release commit.",
+    "Current HEAD matched origin/main.",
+    "Package dry-run output was reviewed before any publish action."
+  ],
+  "last_validation": [
+    {
+      "command": "npm test",
+      "result": "passed"
+    },
+    {
+      "command": "npm run lint",
+      "result": "passed"
+    },
+    {
+      "command": "node harness/scripts/run-harness.js",
+      "result": "passed"
+    },
+    {
+      "command": "npm pack --dry-run",
+      "result": "passed"
+    }
+  ],
+  "known_blockers": [],
+  "scope_guard": [
+    "Manual release commands require explicit maintainer confirmation.",
+    "Do not add runtime scope during release preparation.",
+    "Do not merge, tag, publish, or create releases automatically."
+  ],
+  "release_lifecycle": {
+    "state": "release-candidate",
+    "classification": "release-candidate",
+    "network_required": false,
+    "manual_confirmation_required": true,
+    "expected_evidence": [
+      "clean main branch",
+      "HEAD matches origin/main",
+      "current HEAD CI passed",
+      "local validation passed",
+      "package dry-run reviewed",
+      "target tag, GitHub release, and package version absent"
+    ],
+    "stop_conditions": [
+      "npm account is not authenticated",
+      "working tree is dirty",
+      "HEAD does not match origin/main",
+      "target tag, GitHub release, or package version already exists",
+      "current HEAD CI is missing or failed"
+    ],
+    "allowed_next_action": "Ask the maintainer to confirm exactly one manual release command."
+  },
+  "updated_at": "2026-04-28T00:00:00.000Z"
+}

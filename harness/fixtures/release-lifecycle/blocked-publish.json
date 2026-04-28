@@ -1,0 +1,49 @@
+{
+  "plan": "plans/v0.1.1-post-release-hardening-execplan.md",
+  "current_stage": "R4",
+  "stage_status": "blocked",
+  "next_atomic_task": "Record the publish blocker and wait for maintainer action.",
+  "last_completed_evidence": [
+    "Release tag was created only after explicit maintainer confirmation.",
+    "Package publish was attempted manually by the maintainer.",
+    "Publish failed before the package version became visible."
+  ],
+  "last_validation": [
+    {
+      "command": "npm publish",
+      "result": "failed with two-factor authentication requirement"
+    },
+    {
+      "command": "npm view encourage-loop@0.1.0 version",
+      "result": "not published yet"
+    }
+  ],
+  "known_blockers": [
+    "npm publish requires two-factor authentication or an eligible granular access token."
+  ],
+  "scope_guard": [
+    "Do not request or handle the maintainer's npm password, token, or one-time password.",
+    "Do not delete tags, unpublish packages, or retry release actions automatically.",
+    "Record the blocker and stop until the maintainer resolves authentication."
+  ],
+  "release_lifecycle": {
+    "state": "blocked-publish",
+    "classification": "blocked",
+    "network_required": false,
+    "manual_confirmation_required": true,
+    "expected_evidence": [
+      "manual publish command failed",
+      "failure reason recorded",
+      "package version still absent",
+      "current blocker recorded in cursor or handoff"
+    ],
+    "stop_conditions": [
+      "authentication is missing or incomplete",
+      "publish output is ambiguous",
+      "package version appears published after the failed attempt",
+      "maintainer has not confirmed the next single release command"
+    ],
+    "allowed_next_action": "Explain the blocker, preserve evidence, and wait for maintainer authentication."
+  },
+  "updated_at": "2026-04-28T00:00:00.000Z"
+}

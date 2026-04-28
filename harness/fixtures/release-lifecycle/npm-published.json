@@ -1,0 +1,45 @@
+{
+  "plan": "plans/v0.1.1-post-release-hardening-execplan.md",
+  "current_stage": "R4",
+  "stage_status": "validation_pending",
+  "next_atomic_task": "Verify the npm package evidence and ask for the GitHub release command.",
+  "last_completed_evidence": [
+    "Package publish completed after maintainer-provided two-factor authentication.",
+    "Published package version was visible through npm metadata.",
+    "Published tarball metadata was recorded."
+  ],
+  "last_validation": [
+    {
+      "command": "npm view encourage-loop@0.1.0 version dist.tarball --json",
+      "result": "returned version and tarball metadata"
+    }
+  ],
+  "known_blockers": [
+    "GitHub release has not been created yet."
+  ],
+  "scope_guard": [
+    "Do not claim released until both npm and GitHub release evidence exist.",
+    "Do not create a GitHub release without explicit maintainer confirmation.",
+    "Do not make unrelated docs or runtime changes while the release is partial."
+  ],
+  "release_lifecycle": {
+    "state": "npm-published",
+    "classification": "partially-released",
+    "network_required": false,
+    "manual_confirmation_required": true,
+    "expected_evidence": [
+      "npm version visible",
+      "npm tarball metadata visible",
+      "GitHub release still absent",
+      "next manual command identified"
+    ],
+    "stop_conditions": [
+      "npm version is not visible",
+      "published package metadata does not match the intended release",
+      "GitHub release already exists with unexpected metadata",
+      "maintainer has not confirmed release creation"
+    ],
+    "allowed_next_action": "Record npm evidence, then request explicit confirmation for GitHub release creation."
+  },
+  "updated_at": "2026-04-28T00:00:00.000Z"
+}
