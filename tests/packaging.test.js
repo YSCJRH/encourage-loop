@@ -183,5 +183,9 @@ test('CI workflow runs the required local validation commands only', () => {
     lastIndex = index;
   }
 
+  assert.match(workflow, /actions\/checkout@v6/);
+  assert.match(workflow, /actions\/setup-node@v6/);
+  assert.match(workflow, /node-version:\s*"24"/);
+  assert.doesNotMatch(workflow, /FORCE_JAVASCRIPT_ACTIONS_TO_NODE24/);
   assert.doesNotMatch(workflow, /npm publish|gh release|git tag|deploy/i);
 });
