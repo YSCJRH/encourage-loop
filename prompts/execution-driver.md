@@ -13,6 +13,7 @@ Execution:
 - If the current stage is unfinished, continue the next atomic task.
 - If the current stage is implemented but unvalidated, run validation and record evidence.
 - If the current stage is complete, update the cursor and move to the next stage; do only the first atomic task in the next stage.
+- If a release is complete, start or follow a post-release plan before adding runtime scope.
 - If validation fails, fix the smallest relevant issue or report the blocker.
 - If the cursor and repository state disagree, stop and report the evidence.
 

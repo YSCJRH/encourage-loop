@@ -6,7 +6,8 @@ Project: EncourageLoop.
 Tagline: Gentle guardrails for long-running coding agents.
 
 Goal:
-Build the MVP of EncourageLoop, a gentle supervision layer for long-running Codex work.
+Continue the current staged EncourageLoop plan, a gentle supervision layer for long-running
+Codex work.
 
 It should help Codex keep moving without drifting from the plan, falsely claiming completion,
 skipping validation, or losing continuity across turns.
@@ -25,9 +26,10 @@ Initialize or improve only what is missing.
 Read in this order:
 1. AGENTS.md
 2. START_CODEX.md
-3. plans/v0.1-mvp-execplan.md
-4. .encourage/cursor.md if it exists
-5. docs/blueprints/encourage-loop-harness-blueprint.md only if deeper product context is needed
+3. .encourage/cursor.md if it exists
+4. the plan referenced by `.encourage/cursor.md`
+5. plans/v0.1.1-post-release-hardening-execplan.md if no cursor exists
+6. docs/blueprints/encourage-loop-harness-blueprint.md only if deeper product context is needed
 
 MVP scope:
 
@@ -57,7 +59,14 @@ Start with:
 3. Run `node harness/scripts/run-harness.js`.
 4. Fix any failures with minimal changes.
 5. Update `.encourage/cursor.md` using `node bin/encourage.js checkpoint` if the cursor exists.
-6. Otherwise run `node bin/encourage.js init --plan plans/v0.1-mvp-execplan.md` first.
+6. Otherwise run `node bin/encourage.js init --plan plans/v0.1.1-post-release-hardening-execplan.md`
+   first.
+
+Post-release rule:
+
+- If v0.1 is already released, start or follow a post-release plan before adding runtime scope.
+- Do not continue runtime, daemon, MCP, app-server, overlay, hook runtime, or publish work without
+  an explicit current plan.
 
 At the end, report exactly:
 

@@ -42,7 +42,10 @@ For the current candidate, the known passing evidence is:
 Only after explicit maintainer confirmation, the maintainer may choose to run release commands
 manually from a clean `main` checkout.
 
-Suggested sequence:
+Each confirmation covers only one command. Do not combine commands with `&&`, `;`, release
+scripts, force flags, or automatic publish tooling.
+
+Nominal sequence:
 
 ```bash
 git tag v0.1.0
@@ -53,6 +56,20 @@ gh release create v0.1.0 --title "v0.1.0" --notes-file docs/v0.1-readiness-revie
 
 If any command fails, stop and record the blocker. Do not retry with force flags unless the
 maintainer has separately reviewed and approved the exact corrective action.
+
+## Actual v0.1.0 Path
+
+The completed v0.1.0 release followed the manual-only path with these notable facts:
+
+- npm authentication had to be completed by the maintainer on this machine.
+- npm two-factor authentication was required before `npm publish` could succeed.
+- `npm publish` exposed package manifest normalization, so the bin path was fixed before publish.
+- the `v0.1.0` tag was retargeted only after explicit maintainer approval of that exact action.
+- npm publication and GitHub release creation were run manually.
+- post-release evidence was recorded in `.encourage/`, the execution plan, and readiness notes.
+
+This history is evidence, not standing permission to retarget tags, force-push, publish, or create
+GitHub releases. Future release actions require fresh maintainer confirmation.
 
 ## After Release
 

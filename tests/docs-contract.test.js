@@ -104,10 +104,36 @@ test('release checklist keeps release actions manual-only', () => {
   assert.match(checklist, /documentation only/);
   assert.match(checklist, /does not authorize Codex, CI, or any automation/);
   assert.match(checklist, /Only after explicit maintainer confirmation/);
+  assert.match(checklist, /Each confirmation covers only one command/);
   assert.match(checklist, /git tag v0\.1\.0/);
   assert.match(checklist, /npm publish/);
   assert.match(checklist, /gh release create v0\.1\.0/);
+  assert.match(checklist, /npm two-factor authentication/);
+  assert.match(checklist, /retargeted only after explicit maintainer approval/);
+  assert.match(checklist, /post-release evidence/);
   assert.match(checklist, /Do not retry with force flags/);
+});
+
+test('readiness review separates pre-release readiness from release evidence', () => {
+  const review = read('docs/v0.1-readiness-review.md');
+
+  assert.match(review, /## Pre-release readiness evidence/);
+  assert.match(review, /## Completed release evidence/);
+  assert.match(review, /npm publish --dry-run/);
+  assert.match(review, /npm view encourage-loop@0\.1\.0 version dist\.tarball --json/);
+  assert.match(review, /gh release view v0\.1\.0/);
+});
+
+test('startup prompts route post-release work through a plan first', () => {
+  const startup = read('prompts/codex-startup.md');
+  const driver = read('prompts/execution-driver.md');
+  const startCodex = read('START_CODEX.md');
+
+  assert.match(startup, /plans\/v0\.1\.1-post-release-hardening-execplan\.md/);
+  assert.match(startup, /If v0\.1 is already released, start or follow a post-release plan/);
+  assert.match(driver, /If a release is complete, start or follow a post-release plan/);
+  assert.match(startCodex, /plan referenced by \.encourage\/cursor\.md/);
+  assert.match(startCodex, /After a release, start or follow a post-release plan/);
 });
 
 test('blocker hygiene docs distinguish current blockers from historical evidence', () => {

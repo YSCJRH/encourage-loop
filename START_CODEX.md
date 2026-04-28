@@ -22,11 +22,12 @@ node bin/encourage.js handoff
 
 ```text
 $encourage-loop Continue from .encourage/cursor.md.
-Work only on the next atomic task in plans/v0.1-mvp-execplan.md.
+Work only on the next atomic task in the plan referenced by .encourage/cursor.md.
 Validate, checkpoint, and report evidence.
 ```
 
 ## Important
 
 Do not start by adding daemon, MCP, app-server, overlay, or keyboard injection.
-First harden the CLI, tests, cursor contract, and plugin packaging.
+After a release, start or follow a post-release plan before adding runtime scope.
+First harden the CLI, tests, cursor contract, release lifecycle, and plugin packaging.
