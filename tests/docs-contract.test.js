@@ -150,6 +150,22 @@ test('v0.1.1 readiness note is explicit evidence without release action', () => 
   assert.match(note, /requires a separate maintainer decision/);
 });
 
+test('project status separates published release from maintenance candidates', () => {
+  const readme = read('README.md');
+  const status = read('docs/project-status.md');
+
+  assert.match(readme, /docs\/project-status\.md/);
+  assert.match(status, /versions as `\["0\.1\.0"\]`/);
+  assert.match(status, /GitHub release `v0\.1\.0` exists/);
+  assert.match(status, /v0\.1\.1 is a repository maintenance candidate/);
+  assert.match(status, /v0\.1\.2 is a repository maintenance candidate/);
+  assert.match(status, /has not been released/);
+  assert.match(status, /There is no remote `v0\.1\.1` tag or `v0\.1\.2` tag/);
+  assert.match(status, /`package\.json` remains at version `0\.1\.0`/);
+  assert.match(status, /requires a separate\s+maintainer decision/);
+  assert.match(status, /Do not treat a readiness note, passing CI run, or maintenance plan completion as release/);
+});
+
 test('blocker hygiene docs distinguish current blockers from historical evidence', () => {
   const docs = read('docs/blocker-hygiene.md');
 

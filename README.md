@@ -124,6 +124,12 @@ npm run lint
 node harness/scripts/run-harness.js
 ```
 
+## Project status
+
+Current published release and maintenance-candidate facts are tracked in
+`docs/project-status.md`. Use that page to distinguish released package evidence from repository
+readiness notes before preparing any future release.
+
 ## Release
 
 Release remains manual-only. See `docs/release-checklist.md` before any tag, publish,
