@@ -185,11 +185,29 @@ test('project status separates published release from maintenance candidates', (
   assert.match(status, /v0\.1\.2 is a repository maintenance candidate/);
   assert.match(status, /v0\.1\.3 is a repository status snapshot candidate/);
   assert.match(status, /v0\.1\.4 is a repository release-preparation guard candidate/);
+  assert.match(status, /v0\.1\.5 is a repository status-stability candidate/);
   assert.match(status, /has not been released/);
-  assert.match(status, /There is no remote `v0\.1\.1` tag, `v0\.1\.2` tag, `v0\.1\.3` tag, or `v0\.1\.4` tag/);
   assert.match(status, /`package\.json` remains at version `0\.1\.0`/);
   assert.match(status, /requires a separate\s+maintainer decision/);
   assert.match(status, /Do not treat a readiness note, passing CI run, or maintenance plan completion as release/);
+});
+
+test('project status avoids volatile current-state evidence', () => {
+  const status = read('docs/project-status.md');
+
+  assert.match(status, /Finding Current State/);
+  assert.match(status, /avoids pinning current `HEAD`, active cursor, or GitHub Actions run IDs/);
+  assert.match(status, /node bin\/encourage\.js status/);
+  assert.match(status, /git status --short --branch/);
+  assert.match(status, /git rev-parse HEAD/);
+  assert.match(status, /gh run list --repo YSCJRH\/encourage-loop --branch main --limit 5/);
+  assert.match(status, /git ls-remote origin refs\/heads\/main refs\/tags\/v<target-version>/);
+  assert.match(status, /Keep current evidence in `\.encourage\/`, execution-plan evidence/);
+  assert.doesNotMatch(status, /Current cursor plan:/);
+  assert.doesNotMatch(status, /Current validation:/);
+  assert.doesNotMatch(status, /Current next action:/);
+  assert.doesNotMatch(status, /main@[0-9a-f]{7,40}/);
+  assert.doesNotMatch(status, /GitHub Actions run `\d+`/);
 });
 
 test('blocker hygiene docs distinguish current blockers from historical evidence', () => {
