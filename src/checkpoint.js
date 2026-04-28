@@ -12,19 +12,19 @@ export function checkpoint(options, cwd = process.cwd()) {
   if (options.evidence) evidence.push(options.evidence);
 
   const validations = [...(cursor.last_validation || [])];
-  for (const validationText of optionList(options.validation)) {
-    const validation = parseValidation(validationText);
-    validations.push(validation);
-    appendJsonl(encouragePath(VALIDATIONS_JSONL, cwd), {
-      type: 'validation',
-      at: new Date().toISOString(),
-      stage,
-      ...validation
-    });
-  }
+  const newValidations = optionStringList('validation', options.validation).map(parseValidation);
+  validations.push(...newValidations);
 
-  const knownBlockers = [...(cursor.known_blockers || [])];
-  if (options.blocker) knownBlockers.push(options.blocker);
+  const knownBlockers = unique(cursor.known_blockers || []);
+  const blockers = optionStringList('blocker', options.blocker);
+  for (const blocker of blockers) addUnique(knownBlockers, blocker);
+  const resolvedBlockers = unique(optionStringList('resolve-blocker', options.resolve_blocker));
+  const unknownBlocker = resolvedBlockers.find((blocker) => !knownBlockers.includes(blocker));
+  if (unknownBlocker) throw new Error(`Cannot resolve unknown blocker: ${unknownBlocker}`);
+  for (const blocker of resolvedBlockers) {
+    const index = knownBlockers.indexOf(blocker);
+    knownBlockers.splice(index, 1);
+  }
 
   const updated = writeCursor({
     ...cursor,
@@ -36,6 +36,15 @@ export function checkpoint(options, cwd = process.cwd()) {
     known_blockers: knownBlockers
   }, cwd);
 
+  for (const validation of newValidations) {
+    appendJsonl(encouragePath(VALIDATIONS_JSONL, cwd), {
+      type: 'validation',
+      at: new Date().toISOString(),
+      stage,
+      ...validation
+    });
+  }
+
   appendJsonl(encouragePath(STATE_JSONL, cwd), {
     type: 'checkpoint',
     at: new Date().toISOString(),
@@ -43,15 +52,35 @@ export function checkpoint(options, cwd = process.cwd()) {
     status,
     evidence: options.evidence || null,
     next,
-    blocker: options.blocker || null
+    blocker: blockers.join('\n') || null,
+    resolved_blockers: resolvedBlockers
   });
 
   return updated;
 }
 
+function addUnique(list, value) {
+  if (!list.includes(value)) list.push(value);
+}
+
+function unique(list) {
+  const result = [];
+  for (const item of list) addUnique(result, item);
+  return result;
+}
+
 function optionList(value) {
   if (value === undefined || value === null || value === false) return [];
   return Array.isArray(value) ? value : [value];
+}
+
+function optionStringList(name, value) {
+  return optionList(value).map((item) => {
+    if (typeof item !== 'string' || item.trim() === '') {
+      throw new Error(`--${name} requires a non-empty string value.`);
+    }
+    return item;
+  });
 }
 
 function parseValidation(text) {

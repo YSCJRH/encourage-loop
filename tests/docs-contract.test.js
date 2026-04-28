@@ -109,3 +109,13 @@ test('release checklist keeps release actions manual-only', () => {
   assert.match(checklist, /gh release create v0\.1\.0/);
   assert.match(checklist, /Do not retry with force flags/);
 });
+
+test('blocker hygiene docs distinguish current blockers from historical evidence', () => {
+  const docs = read('docs/blocker-hygiene.md');
+
+  assert.match(docs, /current blockers/);
+  assert.match(docs, /historical evidence/);
+  assert.match(docs, /--resolve-blocker/);
+  assert.match(docs, /exact text/);
+  assert.match(docs, /Do not delete historical evidence/);
+});

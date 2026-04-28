@@ -69,3 +69,52 @@ test('CLI checkpoint preserves repeated validation flags', () => {
     { command: 'npm run lint', result: 'passed' }
   ]);
 });
+
+test('CLI checkpoint resolves an exact blocker', () => {
+  const cwd = tempRepo();
+
+  const init = runCli(cwd, ['init', '--plan', 'plan.md']);
+  assert.equal(init.status, 0);
+
+  const blocked = runCli(cwd, [
+    'checkpoint',
+    '--blocker',
+    'Manual npm authentication is required.',
+    '--evidence',
+    'Recorded npm auth blocker.'
+  ]);
+  assert.equal(blocked.status, 0);
+
+  const resolved = runCli(cwd, [
+    'checkpoint',
+    '--resolve-blocker',
+    'Manual npm authentication is required.',
+    '--evidence',
+    'Maintainer authenticated npm.',
+    '--validation',
+    'npm whoami: sycjrh'
+  ]);
+  assert.equal(resolved.status, 0);
+
+  const cursor = JSON.parse(fs.readFileSync(path.join(cwd, '.encourage/cursor.json'), 'utf8'));
+  assert.deepEqual(cursor.known_blockers, []);
+  assert.match(cursor.last_completed_evidence.at(-1), /authenticated npm/);
+});
+
+test('CLI checkpoint rejects valueless blocker flags', () => {
+  const cwd = tempRepo();
+
+  const init = runCli(cwd, ['init', '--plan', 'plan.md']);
+  assert.equal(init.status, 0);
+
+  const blocker = runCli(cwd, ['checkpoint', '--blocker']);
+  assert.equal(blocker.status, 1);
+  assert.match(blocker.stderr, /--blocker requires a non-empty string value/);
+
+  const resolve = runCli(cwd, ['checkpoint', '--resolve-blocker']);
+  assert.equal(resolve.status, 1);
+  assert.match(resolve.stderr, /--resolve-blocker requires a non-empty string value/);
+
+  const cursor = JSON.parse(fs.readFileSync(path.join(cwd, '.encourage/cursor.json'), 'utf8'));
+  assert.deepEqual(cursor.known_blockers, []);
+});

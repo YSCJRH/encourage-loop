@@ -87,7 +87,7 @@ function helpText() {
 Commands:
   encourage init --plan <path> [--force]
   encourage status [--json]
-  encourage checkpoint --stage <stage> --status <status> --evidence <text> --next <text> [--validation "cmd: result"] [--blocker <text>]
+  encourage checkpoint --stage <stage> --status <status> --evidence <text> --next <text> [--validation "cmd: result"] [--blocker <text>] [--resolve-blocker <exact text>]
   encourage validate
   encourage nudge
   encourage handoff

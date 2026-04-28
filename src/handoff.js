@@ -12,8 +12,8 @@ export function handoff(cwd = process.cwd()) {
 }
 
 export function renderHandoff(cursor, status) {
-  const evidence = (cursor.last_completed_evidence || []).length ? cursor.last_completed_evidence.map((e) => `- ${e}`).join('\n') : '- None yet.';
-  const validation = (cursor.last_validation || []).length ? cursor.last_validation.map((v) => `- ${typeof v === 'string' ? v : `${v.command}: ${v.result}${v.notes ? ` (${v.notes})` : ''}`}`).join('\n') : '- None yet.';
+  const evidence = renderRecentList(cursor.last_completed_evidence || [], (e) => e, '- None yet.');
+  const validation = renderRecentList(cursor.last_validation || [], (v) => typeof v === 'string' ? v : `${v.command}: ${v.result}${v.notes ? ` (${v.notes})` : ''}`, '- None yet.');
   const blockers = (cursor.known_blockers || []).length ? cursor.known_blockers.map((b) => `- ${b}`).join('\n') : '- None.';
   const warnings = status.warnings.length ? status.warnings.map((w) => `- ${w.level}: ${w.message}`).join('\n') : '- None.';
 
@@ -67,4 +67,15 @@ ${cursor.next_atomic_task || 'Define the next atomic task.'}
 $encourage-loop Continue from .encourage/cursor.md. Work only on the next atomic task, validate, checkpoint, and report evidence.
 \`\`\`
 `;
+}
+
+function renderRecentList(items, renderItem, empty, limit = 8) {
+  if (!items.length) return empty;
+  const visible = items.slice(-limit);
+  const lines = [];
+  if (items.length > visible.length) {
+    lines.push(`- Showing latest ${visible.length} of ${items.length} entries; older entries remain in .encourage history.`);
+  }
+  for (const item of visible) lines.push(`- ${renderItem(item)}`);
+  return lines.join('\n');
 }

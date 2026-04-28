@@ -48,6 +48,12 @@
         "string",
         "null"
       ]
+    },
+    "resolved_blockers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     }
   }
 }
