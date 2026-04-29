@@ -89,5 +89,5 @@ node bin/encourage.js validate
 node bin/encourage.js handoff
 ```
 
-Then update `docs/project-status.md`, the target execution plan, and `.encourage/` evidence before
-starting post-release work.
+Then update `docs/project-status.md`, the target execution plan, docs contract tests, and
+`.encourage/` evidence before starting post-release work.

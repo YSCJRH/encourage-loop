@@ -1,6 +1,6 @@
 # EncourageLoop Project Status
 
-Last verified: 2026-04-28.
+Last verified: 2026-04-29.
 
 This page separates released package facts from repository maintenance candidates. It is status
 evidence only; it does not authorize a version bump, tag, npm publish, GitHub release, merge,
@@ -8,12 +8,18 @@ deployment, or automation.
 
 ## Published Release
 
-- npm currently reports `encourage-loop` versions as `["0.1.0"]`.
+- Post-release verification on 2026-04-29 recorded npm versions as `["0.1.0","0.1.5"]`.
+- Post-release verification on 2026-04-29 recorded the npm `latest` dist-tag as `0.1.5`.
 - npm package `encourage-loop@0.1.0` is visible with tarball
   `https://registry.npmjs.org/encourage-loop/-/encourage-loop-0.1.0.tgz`.
+- npm package `encourage-loop@0.1.5` is visible with tarball
+  `https://registry.npmjs.org/encourage-loop/-/encourage-loop-0.1.5.tgz`.
 - GitHub release `v0.1.0` exists, is not a draft, and is not a prerelease.
 - GitHub release `v0.1.0` was published at `2026-04-28T11:16:17Z`.
 - Remote tag `v0.1.0` points to `8ffd2cc023bffef061778f76e7299450654e0de6`.
+- GitHub release `v0.1.5` exists, is not a draft, and is not a prerelease.
+- GitHub release `v0.1.5` was published at `2026-04-29T05:58:50Z`.
+- Remote tag `v0.1.5` points to `23281c46f1a97a780a7c59be4557aeb954d9fcf2`.
 
 ## Repository Maintenance Candidates
 
@@ -25,11 +31,8 @@ deployment, or automation.
   `plans/v0.1.3-project-status-execplan.md`; it has not been released.
 - v0.1.4 is a repository release-preparation guard candidate documented by
   `docs/future-release-preparation.md`; it has not been released.
-- v0.1.5 is a repository status-stability and release-preparation candidate documented by
-  `plans/v0.1.5-status-stability-execplan.md` and `docs/v0.1.5-release-notes.md`; it has not
-  been released.
-- Package and plugin metadata may be prepared at `0.1.5` after explicit maintainer confirmation,
-  but npm and GitHub release evidence remain at `0.1.0` until manual release actions complete.
+- v0.1.5 has been released. Its status-stability and release-preparation evidence is documented by
+  `plans/v0.1.5-status-stability-execplan.md` and `docs/v0.1.5-release-notes.md`.
 
 ## Finding Current State
 
@@ -50,9 +53,8 @@ boundaries.
 
 ## Release Boundary
 
-Future release preparation for v0.1.1, v0.1.2, v0.1.3, v0.1.4, v0.1.5, or any later version
-requires a separate maintainer decision, fresh validation, and explicit manual confirmation for
-each release command.
+Future release preparation for v0.1.6 or any later version requires a separate maintainer
+decision, fresh validation, and explicit manual confirmation for each release command.
 Use `docs/future-release-preparation.md` before preparing any future release.
 
 Do not treat a readiness note, passing CI run, or maintenance plan completion as release

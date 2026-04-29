@@ -135,6 +135,7 @@ test('future release preparation guard stays manual-only and version-specific', 
   assert.match(guard, /git tag v<target-version>/);
   assert.match(guard, /gh release create v<target-version>/);
   assert.match(guard, /Do not delete a\s+tag, retarget a tag, unpublish, force-push/);
+  assert.match(guard, /target execution plan, docs contract tests, and\s+`\.encourage\/` evidence/);
   assert.doesNotMatch(guard, /--force|git push -f|npm publish --dry-run/);
 });
 
@@ -179,19 +180,25 @@ test('project status separates published release from maintenance candidates', (
   const status = read('docs/project-status.md');
 
   assert.match(readme, /docs\/project-status\.md/);
-  assert.match(status, /versions as `\["0\.1\.0"\]`/);
+  assert.match(status, /Post-release verification on 2026-04-29 recorded npm versions as `\["0\.1\.0","0\.1\.5"\]`/);
+  assert.match(status, /Post-release verification on 2026-04-29 recorded the npm `latest` dist-tag as `0\.1\.5`/);
   assert.match(status, /GitHub release `v0\.1\.0` exists/);
+  assert.match(status, /npm package `encourage-loop@0\.1\.5` is visible/);
+  assert.match(status, /GitHub release `v0\.1\.5` exists/);
+  assert.match(status, /Remote tag `v0\.1\.5` points to `23281c46f1a97a780a7c59be4557aeb954d9fcf2`/);
   assert.match(status, /v0\.1\.1 is a repository maintenance candidate/);
   assert.match(status, /v0\.1\.2 is a repository maintenance candidate/);
   assert.match(status, /v0\.1\.3 is a repository status snapshot candidate/);
   assert.match(status, /v0\.1\.4 is a repository release-preparation guard candidate/);
-  assert.match(status, /v0\.1\.5 is a repository status-stability and release-preparation candidate/);
+  assert.match(status, /v0\.1\.5 has been released/);
   assert.match(status, /docs\/v0\.1\.5-release-notes\.md/);
   assert.match(status, /has not been released/);
-  assert.match(status, /Package and plugin metadata may be prepared at `0\.1\.5`/);
-  assert.match(status, /npm and GitHub release evidence remain at `0\.1\.0`/);
-  assert.match(status, /requires a separate\s+maintainer decision/);
+  assert.match(status, /Future release preparation for v0\.1\.6 or any later version/);
+  assert.match(status, /requires a separate\s+maintainer\s+decision/);
   assert.match(status, /Do not treat a readiness note, passing CI run, or maintenance plan completion as release/);
+  assert.doesNotMatch(status, /v0\.1\.5[^.\n]*has not been released/);
+  assert.doesNotMatch(status, /v0\.1\.5 is a repository status-stability and release-preparation candidate/);
+  assert.doesNotMatch(status, /npm and GitHub release evidence remain at `0\.1\.0`/);
 });
 
 test('v0.1.5 release notes define the approved release-preparation target', () => {
