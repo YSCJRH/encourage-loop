@@ -1,6 +1,6 @@
 {
   "name": "encourage-loop",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Gentle guardrails for long-running coding agents.",
   "type": "module",
   "files": [

@@ -213,6 +213,17 @@ test('v0.1.5 release notes define the approved release-preparation target', () =
   assert.match(notes, /does not itself authorize\s+tag, publish, or release commands/);
 });
 
+test('v0.1.6 release notes define the approved release-preparation target', () => {
+  const notes = read('docs/v0.1.6-release-notes.md');
+
+  assert.match(notes, /# EncourageLoop v0\.1\.6 Release Notes/);
+  assert.match(notes, /Target package version: `0\.1\.6`/);
+  assert.match(notes, /Target tag: `v0\.1\.6`/);
+  assert.match(notes, /Release scope: npm package and GitHub release/);
+  assert.match(notes, /status` readable when validation history is long/);
+  assert.match(notes, /does not itself authorize\s+tag, publish, or release commands/);
+});
+
 test('project status avoids volatile current-state evidence', () => {
   const status = read('docs/project-status.md');
 

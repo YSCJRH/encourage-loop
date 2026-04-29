@@ -1,6 +1,6 @@
 {
   "name": "encourage-loop",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Gentle guardrails for long-running coding agents: plan cursor, evidence gates, handoff notes, and drift nudges.",
   "author": {
     "name": "YSCJRH"
