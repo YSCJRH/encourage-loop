@@ -192,6 +192,8 @@ test('project status separates published release from maintenance candidates', (
   assert.match(status, /v0\.1\.4 is a repository release-preparation guard candidate/);
   assert.match(status, /v0\.1\.5 has been released/);
   assert.match(status, /docs\/v0\.1\.5-release-notes\.md/);
+  assert.match(status, /v0\.1\.6 is a repository post-release status readability candidate/);
+  assert.match(status, /plans\/v0\.1\.6-post-release-status-readability-execplan\.md/);
   assert.match(status, /has not been released/);
   assert.match(status, /Future release preparation for v0\.1\.6 or any later version/);
   assert.match(status, /requires a separate\s+maintainer\s+decision/);

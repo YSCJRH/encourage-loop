@@ -33,6 +33,8 @@ deployment, or automation.
   `docs/future-release-preparation.md`; it has not been released.
 - v0.1.5 has been released. Its status-stability and release-preparation evidence is documented by
   `plans/v0.1.5-status-stability-execplan.md` and `docs/v0.1.5-release-notes.md`.
+- v0.1.6 is a repository post-release status readability candidate documented by
+  `plans/v0.1.6-post-release-status-readability-execplan.md`; it has not been released.
 
 ## Finding Current State
 
