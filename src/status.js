@@ -43,10 +43,29 @@ export function renderStatus(status) {
     `Status: ${status.stage_status || '(missing)'}`,
     `Next task: ${status.next_atomic_task || '(missing)'}`,
     `Git: ${status.git.available ? `${status.git.branch}@${status.git.head}, dirty files: ${status.git.dirty_count}` : 'not available'}`,
-    `Last validation: ${status.last_validation.length ? status.last_validation.map((v) => typeof v === 'string' ? v : `${v.command}: ${v.result}`).join('; ') : 'none'}`,
+    'Last validation:',
+    ...renderRecentList(status.last_validation || [], renderValidationEntry, 'none'),
     'Warnings:'
   ];
   if (status.warnings.length === 0) lines.push('- none');
   else for (const warning of status.warnings) lines.push(`- ${warning.level}: ${warning.message}`);
   return `${lines.join('\n')}\n`;
+}
+
+function renderRecentList(items, renderItem, empty, limit = 8) {
+  if (!items || items.length === 0) return [`- ${empty}`];
+  const visible = items.slice(-limit);
+  const prefix = items.length > visible.length
+    ? [`- Showing latest ${visible.length} of ${items.length} entries; older entries remain in .encourage/ history.`]
+    : [];
+  return [
+    ...prefix,
+    ...visible.map((item) => `- ${renderItem(item)}`)
+  ];
+}
+
+function renderValidationEntry(validation) {
+  if (typeof validation === 'string') return validation;
+  const note = validation.notes ? ` (${validation.notes})` : '';
+  return `${validation.command}: ${validation.result}${note}`;
 }
