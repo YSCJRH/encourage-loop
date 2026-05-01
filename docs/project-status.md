@@ -44,6 +44,8 @@ deployment, or automation.
 - v0.1.6 has been released. Its post-release status readability evidence is documented by
   `plans/v0.1.6-post-release-status-readability-execplan.md` and
   `docs/v0.1.6-release-notes.md`.
+- v0.1.7 is a repository release recovery hardening candidate documented by
+  `plans/v0.1.7-release-recovery-hardening-execplan.md`; it has not been released.
 
 ## Finding Current State
 
