@@ -77,6 +77,42 @@ If any command fails, stop. Record the exact output, release state, and blocker.
 tag, retarget a tag, unpublish, force-push, or retry with force flags unless the maintainer
 separately approves that exact corrective action.
 
+## Release Recovery
+
+Release recovery starts from evidence, not from another write command. Treat any failed release
+command as a partial release until read-only checks prove otherwise. A common partial release is
+where the tag exists but npm or GitHub release is incomplete.
+
+Distinguish npm authentication failures from publish authorization failures:
+
+- `E401` means the local npm CLI identity is not authorized. Re-authenticate with
+  `npm login --auth-type=web`, then verify `npm whoami` before retrying any publish command.
+- `EOTP` means npm accepted the identity but requires a publish-time OTP. The OTP is manual,
+  short-lived, and should be supplied only for the single publish command being retried.
+
+Before retrying anything, run read-only checks and compare them with the target execution plan:
+
+```bash
+git status --short --branch
+git rev-parse HEAD
+git ls-remote origin refs/tags/v<target-version>
+npm view encourage-loop versions --json
+npm view encourage-loop dist-tags --json
+npm view encourage-loop@<target-version> version dist.tarball --json
+gh release view v<target-version>
+node bin/encourage.js validate
+```
+
+Record the exact output, release state, and blocker before stopping or proceeding. If the npm
+package is published but the GitHub release is missing, verify the npm tarball and dist-tag before
+creating the GitHub release. If the tag exists but npm is missing, verify the tag target and package
+metadata before retrying publish.
+
+Do not delete tags, retarget tags, force-push, unpublish, or retry publish unless the maintainer
+has reviewed the read-only evidence and given explicit maintainer approval for that exact action.
+If the intended corrective action is unclear, stop and keep the cursor blocked with the observed
+state.
+
 ## Post-Release Evidence
 
 After a successful manual release, verify and record:

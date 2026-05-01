@@ -139,6 +139,28 @@ test('future release preparation guard stays manual-only and version-specific', 
   assert.doesNotMatch(guard, /--force|git push -f|npm publish --dry-run/);
 });
 
+test('future release recovery guidance handles partial publishes safely', () => {
+  const guard = read('docs/future-release-preparation.md');
+
+  assert.match(guard, /## Release Recovery/);
+  assert.match(guard, /`E401`/);
+  assert.match(guard, /npm login --auth-type=web/);
+  assert.match(guard, /`EOTP`/);
+  assert.match(guard, /publish-time OTP/);
+  assert.match(guard, /short-lived/);
+  assert.match(guard, /partial release/);
+  assert.match(guard, /tag exists but npm or GitHub release is incomplete/);
+  assert.match(guard, /npm view encourage-loop versions --json/);
+  assert.match(guard, /npm view encourage-loop dist-tags --json/);
+  assert.match(guard, /npm view encourage-loop@<target-version> version dist\.tarball --json/);
+  assert.match(guard, /git ls-remote origin refs\/tags\/v<target-version>/);
+  assert.match(guard, /gh release view v<target-version>/);
+  assert.match(guard, /Do not delete tags, retarget tags, force-push, unpublish, or retry publish/);
+  assert.match(guard, /explicit maintainer approval/);
+  assert.match(guard, /Record the exact output, release state, and blocker/);
+  assert.doesNotMatch(guard, /automatic retry|automatic tag repair|automatic release creation/);
+});
+
 test('readiness review separates pre-release readiness from release evidence', () => {
   const review = read('docs/v0.1-readiness-review.md');
 
