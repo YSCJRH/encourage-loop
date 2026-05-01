@@ -97,8 +97,8 @@ export function writeCursor(cursor, cwd = process.cwd()) {
 }
 
 export function renderCursorMarkdown(cursor) {
-  const evidence = list(cursor.last_completed_evidence);
-  const validation = list((cursor.last_validation || []).map((item) => typeof item === 'string' ? item : `${item.command}: ${item.result}${item.notes ? ` (${item.notes})` : ''}`));
+  const evidence = recentList(cursor.last_completed_evidence, renderListItem);
+  const validation = recentList(cursor.last_validation || [], renderValidationItem);
   const blockers = list(cursor.known_blockers);
   const guard = list(cursor.scope_guard);
   return `# EncourageLoop Cursor
@@ -131,6 +131,27 @@ function list(items = []) {
   return items.map((item) => `- ${item}`).join('\n');
 }
 
+function recentList(items = [], renderItem, limit = 8) {
+  if (!items || items.length === 0) return '- None yet.';
+  const visible = items.slice(-limit);
+  const prefix = items.length > visible.length
+    ? [`- Showing latest ${visible.length} of ${items.length} entries; older entries remain in .encourage/ history.`]
+    : [];
+  return [
+    ...prefix,
+    ...visible.map((item) => `- ${renderItem(item)}`)
+  ].join('\n');
+}
+
+function renderListItem(item) {
+  return item;
+}
+
+function renderValidationItem(item) {
+  if (typeof item === 'string') return item;
+  return `${item.command}: ${item.result}${item.notes ? ` (${item.notes})` : ''}`;
+}
+
 function parseCursorMarkdown(text) {
   const get = (label) => {
     const re = new RegExp(`${escapeRegExp(label)}:\\s*([^\\n]+)`, 'i');
@@ -146,7 +167,7 @@ function parseCursorMarkdown(text) {
   const listBlock = (label) => block(label)
     .split(/\r?\n/)
     .map((line) => line.trim().replace(/^-\s*/, '').trim())
-    .filter((line) => line && line !== 'None yet.' && line !== 'None.');
+    .filter((line) => line && line !== 'None yet.' && line !== 'None.' && !isRecentListSummary(line));
   const validation = listBlock('Last validation').map(parseValidationLine);
   return {
     plan: get('Plan'),
@@ -159,6 +180,10 @@ function parseCursorMarkdown(text) {
     scope_guard: listBlock('Scope guard'),
     updated_at: get('Updated at')
   };
+}
+
+function isRecentListSummary(line) {
+  return /^Showing latest \d+ of \d+ entries; older entries remain in \.encourage\/ history\.$/.test(line);
 }
 
 function parseValidationLine(line) {
