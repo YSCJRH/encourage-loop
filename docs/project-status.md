@@ -46,6 +46,8 @@ deployment, or automation.
   `docs/v0.1.6-release-notes.md`.
 - v0.1.7 is a repository release recovery hardening candidate documented by
   `plans/v0.1.7-release-recovery-hardening-execplan.md`; it has not been released.
+- v0.1.8 is a repository cursor readability hardening candidate documented by
+  `plans/v0.1.8-cursor-readability-hardening-execplan.md`; it has not been released.
 
 ## Finding Current State
 
