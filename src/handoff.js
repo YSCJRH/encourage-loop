@@ -21,6 +21,12 @@ export function renderHandoff(cursor, status) {
 
 Continue this task under EncourageLoop supervision.
 
+## Execution source of truth
+
+Follow \`.encourage/cursor.md\`, \`.encourage/cursor.json\`, and the current plan below as the
+execution contract. Treat older blueprints as background only; consult them only when scope,
+privacy, or cursor/plan consistency is unclear.
+
 ## Current plan
 
 ${cursor.plan}
@@ -56,6 +62,7 @@ ${cursor.next_atomic_task || 'Define the next atomic task.'}
 ## Do not
 
 - Re-plan the whole project unless the cursor is inconsistent or complete.
+- Re-plan from older blueprints when the cursor and current plan are consistent.
 - Jump to another phase without updating the cursor.
 - Add unrelated product capabilities.
 - Claim done without validation evidence.
@@ -64,7 +71,9 @@ ${cursor.next_atomic_task || 'Define the next atomic task.'}
 ## Suggested Codex prompt
 
 \`\`\`text
-$encourage-loop Continue from .encourage/cursor.md. Work only on the next atomic task, validate, checkpoint, and report evidence.
+$encourage-loop Continue from .encourage/cursor.md and the current exec plan. Treat older blueprints
+as background unless scope, privacy, or cursor/plan consistency is unclear. Work only on the next
+atomic task, validate, checkpoint, and report evidence.
 \`\`\`
 `;
 }

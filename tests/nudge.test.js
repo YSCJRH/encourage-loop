@@ -18,6 +18,8 @@ test('nudge returns steering prompt with the next task when no warnings exist', 
   assert.match(text, /R0/);
   assert.match(text, /Keep the next task visible\./);
   assert.match(text, /validate the result/);
+  assert.match(text, /cursor and current exec plan/);
+  assert.match(text, /older blueprints as background/);
 });
 
 test('nudge keeps the warning and next task together', () => {
@@ -35,4 +37,6 @@ test('nudge keeps the warning and next task together', () => {
   assert.match(text, /Plan file not found: missing-plan\.md/);
   assert.match(text, /Repair the cursor plan reference\./);
   assert.match(text, /before claiming completion/);
+  assert.match(text, /cursor and current exec plan/);
+  assert.match(text, /older blueprints as background/);
 });

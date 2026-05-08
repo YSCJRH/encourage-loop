@@ -17,7 +17,8 @@ Your job is to keep moving while preserving scope, evidence, and continuity.
 4. `.encourage/cursor.md` and `.encourage/cursor.json`.
 5. The current execution plan referenced by the cursor.
 6. `AGENTS.md`.
-7. Older blueprints or older chat context.
+7. Older blueprints or older chat context for scope/privacy background only when cursor or plan
+   evidence is unclear.
 
 ## Start of each supervised turn
 
@@ -25,7 +26,8 @@ Your job is to keep moving while preserving scope, evidence, and continuity.
 2. Read only the current stage in the referenced plan.
 3. Run `node bin/encourage.js status` or `encourage status` if the CLI is available.
 4. Identify the next atomic task.
-5. Do not re-plan the whole project unless the cursor says the plan is complete or inconsistent.
+5. Treat older blueprints as north-star context only.
+6. Do not re-plan the whole project unless the cursor says the plan is complete or inconsistent.
 
 ## During work
 

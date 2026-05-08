@@ -121,6 +121,22 @@ test('install smoke uses a local packed tarball without registry checks', () => 
   assert.doesNotMatch(script, /npm view|npm publish|registry\.npmjs\.org|https?:\/\//);
 });
 
+test('dogfood continuity harness artifacts are included in the package surface', () => {
+  const fixture = readJson('harness/fixtures/winchronicle-dogfood.json');
+  const scorecard = read('harness/scorecards/dogfood-continuity.md');
+  const harnessFiles = listFiles('harness');
+  const planFiles = listFiles('plans');
+
+  assert.ok(harnessFiles.includes('harness/fixtures/winchronicle-dogfood.json'));
+  assert.ok(harnessFiles.includes('harness/scorecards/dogfood-continuity.md'));
+  assert.ok(planFiles.includes('plans/v0.1.9-dogfood-continuity-harness-execplan.md'));
+  assert.equal(fixture.dogfood_continuity.project, 'WinChronicle');
+  assert.equal(fixture.dogfood_continuity.blueprint_role, 'north-star-only');
+  assert.match(scorecard, /Dogfood Continuity Scorecard/);
+  assert.match(scorecard, /Agent jumps to a later phase/);
+  assert.match(scorecard, /Agent claims complete without validation/);
+});
+
 test('local marketplace entry points at this plugin root', () => {
   const manifest = readJson('.codex-plugin/plugin.json');
   const marketplace = readJson('.agents/plugins/marketplace.json');

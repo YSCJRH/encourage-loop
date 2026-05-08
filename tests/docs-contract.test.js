@@ -9,6 +9,10 @@ function read(relativePath) {
   return fs.readFileSync(path.join(root, relativePath), 'utf8');
 }
 
+function readJson(relativePath) {
+  return JSON.parse(read(relativePath));
+}
+
 test('README keeps the public tone gentle and evidence-based', () => {
   const readme = read('README.md');
 
@@ -65,6 +69,27 @@ test('future integration docs remain future-only and constrained', () => {
 
   assert.match(appServer, /intentionally out of MVP scope/);
   assert.match(appServer, /only after the CLI \+ skill loop is trusted/);
+});
+
+test('dogfood continuity contract keeps current plan ahead of older blueprints', () => {
+  const blueprint = read('docs/blueprints/winchronicle-dogfood-blueprint.md');
+  const fixture = readJson('harness/fixtures/winchronicle-dogfood.json');
+  const scorecard = read('harness/scorecards/dogfood-continuity.md');
+  const startup = read('prompts/codex-startup.md');
+  const driver = read('prompts/execution-driver.md');
+  const skill = read('skills/encourage-loop/SKILL.md');
+
+  assert.match(blueprint, /Treat the WinChronicle blueprint as a north star, not a per-turn script/);
+  assert.equal(fixture.dogfood_continuity.blueprint_role, 'north-star-only');
+  assert.equal(fixture.dogfood_continuity.execution_contract, 'current cursor and referenced phased plan');
+  assert.ok(fixture.scope_guard.some((guard) => guard.includes('blueprint as north-star context only')));
+  assert.ok(fixture.dogfood_continuity.must_not.some((item) => item.includes('screenshot or OCR')));
+  assert.match(scorecard, /Agent starts re-planning from the blueprint/);
+  assert.match(scorecard, /Re-align to `\.encourage\/cursor\.\*` and the current exec plan/);
+  assert.match(scorecard, /Agent claims complete without validation/);
+  assert.match(startup, /Treat older blueprints as north-star background only/);
+  assert.match(driver, /current exec plan when they are consistent/);
+  assert.match(skill, /Older blueprints or older chat context for scope\/privacy background only/);
 });
 
 test('operator docs stay readable multi-line Markdown', () => {
@@ -226,6 +251,8 @@ test('project status separates published release from maintenance candidates', (
   assert.match(status, /plans\/v0\.1\.7-release-recovery-hardening-execplan\.md/);
   assert.match(status, /v0\.1\.8 is a repository cursor readability hardening candidate/);
   assert.match(status, /plans\/v0\.1\.8-cursor-readability-hardening-execplan\.md/);
+  assert.match(status, /v0\.1\.9 is a repository dogfood continuity harness candidate/);
+  assert.match(status, /plans\/v0\.1\.9-dogfood-continuity-harness-execplan\.md/);
   assert.match(status, /has not been released/);
   assert.match(status, /Future release preparation for v0\.1\.7 or any later version/);
   assert.match(status, /requires a separate\s+maintainer\s+decision/);

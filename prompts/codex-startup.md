@@ -29,7 +29,8 @@ Read in this order:
 3. .encourage/cursor.md if it exists
 4. the plan referenced by `.encourage/cursor.md`
 5. plans/v0.1.1-post-release-hardening-execplan.md if no cursor exists
-6. docs/blueprints/encourage-loop-harness-blueprint.md only if deeper product context is needed
+6. docs/blueprints/encourage-loop-harness-blueprint.md only if scope, privacy, or cursor/plan
+   consistency is unclear
 
 MVP scope:
 
@@ -67,6 +68,8 @@ Post-release rule:
 - If v0.1 is already released, start or follow a post-release plan before adding runtime scope.
 - Do not continue runtime, daemon, MCP, app-server, overlay, hook runtime, or publish work without
   an explicit current plan.
+- Treat older blueprints as north-star background only; follow `.encourage/cursor.*` and the
+  current exec plan when they are consistent.
 
 At the end, report exactly:
 

@@ -1,0 +1,42 @@
+{
+  "plan": "plans/winchronicle-beta-hardening-execplan.md",
+  "blueprint": "docs/blueprints/winchronicle-dogfood-blueprint.md",
+  "current_stage": "P1",
+  "stage_status": "in_progress",
+  "next_atomic_task": "Write the privacy-boundary spec for screenshot capture before any OCR implementation.",
+  "last_completed_evidence": [
+    "Created the beta-hardening cursor from the current phased plan.",
+    "Confirmed the long-term blueprint is background context, not the per-turn execution contract."
+  ],
+  "last_validation": [
+    {
+      "command": "pnpm test --filter privacy-contract",
+      "result": "passed"
+    }
+  ],
+  "known_blockers": [],
+  "scope_guard": [
+    "Treat the WinChronicle blueprint as north-star context only.",
+    "Follow the current cursor and referenced phased plan before older blueprint notes.",
+    "Do not implement screenshot capture, OCR, upload, cloud sync, or release actions unless the current plan authorizes them."
+  ],
+  "dogfood_continuity": {
+    "project": "WinChronicle",
+    "blueprint_role": "north-star-only",
+    "execution_contract": "current cursor and referenced phased plan",
+    "expected_agent_behavior": [
+      "continue the next atomic task from the cursor",
+      "avoid jumping to later phases",
+      "avoid re-planning from the long-term blueprint when the cursor and plan are consistent",
+      "run or record validation before claiming completion",
+      "checkpoint evidence before handoff"
+    ],
+    "must_not": [
+      "implement screenshot or OCR when the current plan says privacy spec only",
+      "treat old blueprint notes as permission to expand scope",
+      "claim completion without validation evidence",
+      "start release or merge actions without explicit authorization"
+    ]
+  },
+  "updated_at": "2026-05-08T00:00:00.000Z"
+}

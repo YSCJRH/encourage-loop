@@ -1,6 +1,9 @@
 $encourage-loop Continue executing the current staged plan.
 
-Do not re-design the whole project. Do not re-plan the whole round. Use the current repository state as the highest-priority fact, and use `.encourage/cursor.md` as the execution cursor.
+Do not re-design the whole project. Do not re-plan the whole round. Use the current repository
+state as the highest-priority fact, and use `.encourage/cursor.md` as the execution cursor.
+Treat older blueprints as north-star background only; follow `.encourage/cursor.*` and the
+current exec plan when they are consistent.
 
 Startup:
 1. Read AGENTS.md.

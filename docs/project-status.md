@@ -48,6 +48,8 @@ deployment, or automation.
   `plans/v0.1.7-release-recovery-hardening-execplan.md`; it has not been released.
 - v0.1.8 is a repository cursor readability hardening candidate documented by
   `plans/v0.1.8-cursor-readability-hardening-execplan.md`; it has not been released.
+- v0.1.9 is a repository dogfood continuity harness candidate documented by
+  `plans/v0.1.9-dogfood-continuity-harness-execplan.md`; it has not been released.
 
 ## Finding Current State
 

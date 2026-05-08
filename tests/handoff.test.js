@@ -33,6 +33,10 @@ test('handoff preserves continuity fields and current warnings', () => {
   assert.match(text, /Waiting for manual release approval\./);
   assert.match(text, /RED: Plan file not found: missing-plan\.md/);
   assert.match(text, /Write the next focused harness test\./);
+  assert.match(text, /Execution source of truth/);
+  assert.match(text, /\.encourage\/cursor\.md/);
+  assert.match(text, /current plan below as the\s+execution contract/);
+  assert.match(text, /older blueprints as background only/);
 });
 
 test('released handoff stays readable with long history and no current blockers', () => {
@@ -58,4 +62,30 @@ test('released handoff stays readable with long history and no current blockers'
   assert.match(text, /Release evidence 12\./);
   assert.match(text, /## Known blockers\n\n- None\./);
   assert.match(text, /Start the next post-release plan\./);
+});
+
+test('handoff keeps dogfood continuation focused on cursor and current plan', () => {
+  const cwd = tempRepo();
+  fs.mkdirSync(path.join(cwd, 'plans'), { recursive: true });
+  fs.writeFileSync(path.join(cwd, 'plans/winchronicle-beta-hardening-execplan.md'), '# Plan\n', 'utf8');
+  const cursor = initCursor({ plan: 'plans/winchronicle-beta-hardening-execplan.md', cwd });
+  writeCursor({
+    ...cursor,
+    current_stage: 'P1',
+    next_atomic_task: 'Write the privacy-boundary spec before OCR work.',
+    last_validation: [{ command: 'pnpm test --filter privacy-contract', result: 'passed' }],
+    scope_guard: [
+      'Treat older blueprints as north-star context only.',
+      'Do not implement OCR unless the current plan authorizes it.'
+    ]
+  }, cwd);
+
+  const text = handoff(cwd);
+
+  assert.match(text, /current plan below as the\s+execution contract/);
+  assert.match(text, /older blueprints as background only/);
+  assert.match(text, /Re-plan from older blueprints when the cursor and current plan are consistent/);
+  assert.match(text, /Write the privacy-boundary spec before OCR work\./);
+  assert.match(text, /current exec plan/);
+  assert.doesNotMatch(text, /re-read the whole long-term blueprint/i);
 });
