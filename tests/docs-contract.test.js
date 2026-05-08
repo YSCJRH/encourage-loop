@@ -253,8 +253,12 @@ test('project status separates published release from maintenance candidates', (
   assert.match(status, /plans\/v0\.1\.8-cursor-readability-hardening-execplan\.md/);
   assert.match(status, /v0\.1\.9 is a repository dogfood continuity harness candidate/);
   assert.match(status, /plans\/v0\.1\.9-dogfood-continuity-harness-execplan\.md/);
+  assert.match(status, /v0\.1\.9 is prepared for manual release/);
+  assert.match(status, /plans\/v0\.1\.9-release-preparation-execplan\.md/);
+  assert.match(status, /docs\/v0\.1\.9-release-notes\.md/);
+  assert.match(status, /Checked-in package metadata currently targets `0\.1\.9`/);
   assert.match(status, /has not been released/);
-  assert.match(status, /Future release preparation for v0\.1\.7 or any later version/);
+  assert.match(status, /Future release preparation for v0\.1\.9 or any later version/);
   assert.match(status, /requires a separate\s+maintainer\s+decision/);
   assert.match(status, /Do not treat a readiness note, passing CI run, or maintenance plan completion as release/);
   assert.doesNotMatch(status, /v0\.1\.5[^.\n]*has not been released/);
@@ -281,6 +285,19 @@ test('v0.1.6 release notes define the approved release-preparation target', () =
   assert.match(notes, /Target tag: `v0\.1\.6`/);
   assert.match(notes, /Release scope: npm package and GitHub release/);
   assert.match(notes, /status` readable when validation history is long/);
+  assert.match(notes, /does not itself authorize\s+tag, publish, or release commands/);
+});
+
+test('v0.1.9 release notes define the approved release-preparation target', () => {
+  const notes = read('docs/v0.1.9-release-notes.md');
+
+  assert.match(notes, /# EncourageLoop v0\.1\.9 Release Notes/);
+  assert.match(notes, /Target package version: `0\.1\.9`/);
+  assert.match(notes, /Target tag: `v0\.1\.9`/);
+  assert.match(notes, /Release scope: npm package and GitHub release/);
+  assert.match(notes, /release recovery guidance/);
+  assert.match(notes, /cursor markdown, text status, and handoff output/);
+  assert.match(notes, /WinChronicle dogfood continuity/);
   assert.match(notes, /does not itself authorize\s+tag, publish, or release commands/);
 });
 

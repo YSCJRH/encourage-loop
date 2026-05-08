@@ -49,7 +49,10 @@ deployment, or automation.
 - v0.1.8 is a repository cursor readability hardening candidate documented by
   `plans/v0.1.8-cursor-readability-hardening-execplan.md`; it has not been released.
 - v0.1.9 is a repository dogfood continuity harness candidate documented by
-  `plans/v0.1.9-dogfood-continuity-harness-execplan.md`; it has not been released.
+  `plans/v0.1.9-dogfood-continuity-harness-execplan.md`.
+- v0.1.9 is prepared for manual release through `plans/v0.1.9-release-preparation-execplan.md`
+  and `docs/v0.1.9-release-notes.md`; it has not been released.
+- Checked-in package metadata currently targets `0.1.9` for release preparation.
 
 ## Finding Current State
 
@@ -70,7 +73,7 @@ boundaries.
 
 ## Release Boundary
 
-Future release preparation for v0.1.7 or any later version requires a separate maintainer
+Future release preparation for v0.1.9 or any later version requires a separate maintainer
 decision, fresh validation, and explicit manual confirmation for each release command.
 Use `docs/future-release-preparation.md` before preparing any future release.
 
